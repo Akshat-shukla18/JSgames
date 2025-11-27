@@ -1,20 +1,9 @@
-/*****
-*
-*   Polynomial.js
-*
-*   copyright 2002, Kevin Lindsey
-*
-*****/
+
 
 Polynomial.TOLERANCE = 1e-6;
 Polynomial.ACCURACY  = 6;
 
 
-/*****
-*
-*   interpolate - class method
-*
-*****/
 Polynomial.interpolate = function(xs, ys, n, offset, x) {
     if ( xs.constructor !== Array || ys.constructor !== Array )
         throw new Error("Polynomial.interpolate: xs and ys must be arrays");
@@ -65,21 +54,14 @@ Polynomial.interpolate = function(xs, ys, n, offset, x) {
 };
 
 
-/*****
-*
-*   constructor
-*
-*****/
 function Polynomial() {
     this.init( arguments );
 }
 
 
-/*****
-*
-*   init
-*
-*****/
+/*
+ init
+*/
 Polynomial.prototype.init = function(coefs) {
     this.coefs = new Array();
 
@@ -90,12 +72,7 @@ Polynomial.prototype.init = function(coefs) {
     this._s = 0;
 };
 
-
-/*****
-*
-*   eval
-*
-*****/
+/* eval*/
 Polynomial.prototype.eval = function(x) {
     if ( isNaN(x) )
         throw new Error("Polynomial.eval: parameter must be a number");
@@ -109,11 +86,7 @@ Polynomial.prototype.eval = function(x) {
 };
 
 
-/*****
-*
-*   add
-*
-*****/
+/* add*/
 Polynomial.prototype.add = function(that) {
     var result = new Polynomial();
     var d1 = this.getDegree();
@@ -131,11 +104,8 @@ Polynomial.prototype.add = function(that) {
 };
 
 
-/*****
-*
-*   multiply
-*
-*****/
+/* multiply
+*/
 Polynomial.prototype.multiply = function(that) {
     var result = new Polynomial();
 
@@ -150,22 +120,15 @@ Polynomial.prototype.multiply = function(that) {
 };
 
 
-/*****
-*
-*   divide_scalar
-*
-*****/
+/* divide_scalar
+*/
 Polynomial.prototype.divide_scalar = function(scalar) {
     for ( var i = 0; i < this.coefs.length; i++ )
         this.coefs[i] /= scalar;
 };
 
 
-/*****
-*
-*   simplify
-*
-*****/
+/* simplify*/
 Polynomial.prototype.simplify = function() {
     for ( var i = this.getDegree(); i >= 0; i-- ) {
         if ( Math.abs( this.coefs[i] ) <= Polynomial.TOLERANCE )
@@ -176,11 +139,8 @@ Polynomial.prototype.simplify = function() {
 };
 
 
-/*****
-*
-*   bisection
-*
-*****/
+/* bisection
+*/
 Polynomial.prototype.bisection = function(min, max) {
     var minValue = this.eval(min);
     var maxValue = this.eval(max);
@@ -217,11 +177,7 @@ Polynomial.prototype.bisection = function(min, max) {
 };
 
 
-/*****
-*
-*   toString
-*
-*****/
+/*****  toString**/
 Polynomial.prototype.toString = function() {
     var coefs = new Array();
     var signs = new Array();
@@ -256,12 +212,7 @@ Polynomial.prototype.toString = function() {
 };
 
 
-/*****
-*
-*   trapezoid
-*   Based on trapzd in "Numerical Recipes in C", page 137
-*
-*****/
+
 Polynomial.prototype.trapezoid = function(min, max, n) {
     if ( isNaN(min) || isNaN(max) || isNaN(n) )
         throw new Error("Polynomial.trapezoid: parameters must be numbers");
@@ -293,12 +244,7 @@ Polynomial.prototype.trapezoid = function(min, max, n) {
 };
 
 
-/*****
-*
-*   simpson
-*   Based on trapzd in "Numerical Recipes in C", page 139
-*
-*****/
+
 Polynomial.prototype.simpson = function(min, max) {
     if ( isNaN(min) || isNaN(max) )
         throw new Error("Polynomial.simpson: parameters must be numbers");
@@ -338,11 +284,8 @@ Polynomial.prototype.simpson = function(min, max) {
 };
 
 
-/*****
-*
-*   romberg
-*
-*****/
+/* romberg
+*/
 Polynomial.prototype.romberg = function(min, max) {
     if ( isNaN(min) || isNaN(max) )
         throw new Error("Polynomial.romberg: parameters must be numbers");
@@ -369,27 +312,11 @@ Polynomial.prototype.romberg = function(min, max) {
 };
 
 
-/*****
-*
-*   get/set methods
-*
-*****/
-
-/*****
-*
-*   get degree
-*
-*****/
 Polynomial.prototype.getDegree = function() {
     return this.coefs.length - 1;
 };
 
 
-/*****
-*
-*   getDerivative
-*
-*****/
 Polynomial.prototype.getDerivative = function() {
     var derivative = new Polynomial();
 
@@ -401,11 +328,7 @@ Polynomial.prototype.getDerivative = function() {
 };
 
 
-/*****
-*
-*   getRoots
-*
-*****/
+
 Polynomial.prototype.getRoots = function() {
     var result;
 
@@ -418,18 +341,11 @@ Polynomial.prototype.getRoots = function() {
         case 4: result = this.getQuarticRoots();   break;
         default:
             result = new Array();
-            // should try Newton's method and/or bisection
     }
 
     return result;
 };
 
-
-/*****
-*
-*   getRootsInInterval
-*
-*****/
 Polynomial.prototype.getRootsInInterval = function(min, max) {
     var roots = new Array();
     var root;
@@ -443,11 +359,9 @@ Polynomial.prototype.getRootsInInterval = function(min, max) {
         var droots = deriv.getRootsInInterval(min, max);
 
         if ( droots.length > 0 ) {
-            // find root on [min, droots[0]]
             root = this.bisection(min, droots[0]);
             if ( root != null ) roots.push(root);
 
-            // find root on [droots[i],droots[i+1]] for 0 <= i <= count-2
             for ( i = 0; i <= droots.length-2; i++ ) {
                 root = this.bisection(droots[i], droots[i+1]);
                 if ( root != null ) roots.push(root);
@@ -466,12 +380,6 @@ Polynomial.prototype.getRootsInInterval = function(min, max) {
     return roots;
 };
 
-
-/*****
-*
-*   getLinearRoot
-*
-*****/
 Polynomial.prototype.getLinearRoot = function() {
     var result = new Array();
     var a = this.coefs[1];
@@ -481,13 +389,6 @@ Polynomial.prototype.getLinearRoot = function() {
 
     return result;
 };
-
-
-/*****
-*
-*   getQuadraticRoots
-*
-*****/
 Polynomial.prototype.getQuadraticRoots = function() {
     var results = new Array();
 
@@ -511,16 +412,6 @@ Polynomial.prototype.getQuadraticRoots = function() {
     return results;
 };
 
-
-/*****
-*
-*   getCubicRoots
-*
-*   This code is based on MgcPolynomial.cpp written by David Eberly.  His
-*   code along with many other excellent examples are avaiable at his site:
-*   http://www.magic-software.com
-*
-*****/
 Polynomial.prototype.getCubicRoots = function() {
     var results = new Array();
 
@@ -584,15 +475,7 @@ Polynomial.prototype.getCubicRoots = function() {
 };
 
 
-/*****
-*
-*   getQuarticRoots
-*
-*   This code is based on MgcPolynomial.cpp written by David Eberly.  His
-*   code along with many other excellent examples are avaiable at his site:
-*   http://www.magic-software.com
-*
-*****/
+
 Polynomial.prototype.getQuarticRoots = function() {
     var results = new Array();
 
