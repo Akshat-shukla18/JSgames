@@ -71,13 +71,7 @@ MG.Barrier = function (type) {
         mRootNode.parentNode.removeChild(mRootNode);
     };
 
-    /**
-     * Checks whether the point specified by x and y will collide with the barrier.
-     * Works by counting the number of intersections between the path outlining the
-     * barrier and a line between some point outside of the barrier, and the point
-     * that is being tested.
-     * Returns true if the point intersects the transformed barrier, false otherwise.
-     */
+   
     this.collides = function (x, y) {
         /* transform the provided coordinates to the coordinate system of the barrier */
         var x_ =    x * Math.cos(mTheta*Math.PI/180) + y * Math.sin(mTheta*Math.PI/180);

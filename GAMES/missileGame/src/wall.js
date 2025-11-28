@@ -22,7 +22,7 @@ MG.tunnelWall = (function (rootNode) {
 
             var gradientStart = document.createElementNS(NAMESPACE_SVG, 'stop');
             gradientStart.setAttribute('offset', (5*NEAR_CLIPPING_PLANE / GRADIENT_START) + '');
-            gradientStart.setAttribute('stop-color', '#fff');
+            gradientStart.setAttribute('stop-color', '#ece9e9ff');
             gradient.appendChild(gradientStart);
 
             var gradientStop = document.createElementNS(NAMESPACE_SVG, 'stop');

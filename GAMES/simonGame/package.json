@@ -1,0 +1,11 @@
+{
+  "name": "simon-game",
+  "version": "1.0.0",
+  "description": "Simon memory game",
+  "scripts": {
+    "dev": "http-server"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

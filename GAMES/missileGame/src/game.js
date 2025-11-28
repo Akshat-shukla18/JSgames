@@ -27,7 +27,7 @@ MG.game = (function () {
 
     /* Strings for UI ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     var getLevelString = function () {
-        return mLevel ? 'LEVEL ' + mLevel : 'QUALIFYING LEVEL';
+        return mLevel ? 'LEVEL ' + mLevel : 'LEVEL 1 !';
     }
 
     var Messages = {
