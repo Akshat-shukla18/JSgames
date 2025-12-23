@@ -39,6 +39,35 @@ body {
     max-width: 100%;
 }
 
+/* Pause Button */
+#pause-btn {
+    position: absolute;
+/* top: 5px; */
+top:4%;
+    right: 15%;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid #ffb3ba;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ffe4e1, #ffb3ba);
+    color: #8b0000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(255, 179, 186, 0.3);
+}
+
+#pause-btn:hover {
+    background: linear-gradient(135deg, #ffb3ba, #ff69b4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 179, 186, 0.5);
+}
+
+#pause-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(255, 179, 186, 0.3);
+}
+
 /* Canvas */
 canvas {
     display: block;
@@ -123,3 +152,24 @@ canvas {
         font-size: 1.6rem;
     }
 }
+/* Layout for GIF + Game */
+.game-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+/* GIF Section */
+.gif-section {
+    flex-shrink: 0;
+}
+ 
+.gif-section img {
+    width: 280px;
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+

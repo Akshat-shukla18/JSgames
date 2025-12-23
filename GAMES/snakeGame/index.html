@@ -5,29 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
 
-  
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"> </script>
+    <script src="script.js" defer></script>
 </head>
 
 <body>
     <main class="container">
         <h1>Snake Game</h1>
 
-        <section id="canvas-wrap">
-            <div id="overlay" aria-live="polite">
-                <p>
-                    Score: <span id="final_score">0</span>
-                </p>
-                <button id="restart-btn" type="button">Play Again</button>
-            </div>
+        <!-- Hidden images -->
+        <img id="food1" src="pic.jpg" style="display: none;">
+        <img id="food2" src="pic.jpg" style="display: none;">
+        <img id="food3" src="pic.jpg" style="display: none;">
+        <img id="food4" src="pic.jpg" style="display: none;">
+        <img id="snakeHead" src="pic.jpg" style="display: none;">
 
-            <canvas
-                id="defaultCanvas"
-                width="600"
-                height="450"
-                aria-label="Snake game canvas"
-            ></canvas>
+        <!-- Layout Wrapper -->
+        <section class="game-layout">
+
+            <!-- GIF Section -->
+             <aside class="gif-section"> 
+                <img 
+                    src="snake.gif" 
+                    alt="animation"
+                    loading="lazy"
+                >
+            </aside>
+    <button id="pause-btn" type="button">Pause</button>
+            <!-- Game Section -->
+            <section id="canvas-wrap">
+                <div id="overlay" aria-live="polite">
+                    <p>
+                        Score: <span id="final_score">0</span>
+                    </p>
+                    <button id="restart-btn" type="button">Play Again</button>
+                </div>
+
+                <canvas
+                    id="defaultCanvas"
+                    width="600"
+                    height="450"
+                    aria-label="Snake game canvas"
+                ></canvas>
+
+                <!-- <button id="pause-btn" type="button">Pause</button> -->
+            </section>
+
         </section>
 
         <footer class="footer">
