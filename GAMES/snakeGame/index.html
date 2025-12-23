@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>The Snake Game</title>
-        <script src="script.js"></script>
-        <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
 
-    </head>
-    <body>
-        <div class="container">
-            <h1>Snake Game</h1>
-            <div id="canvas-wrap">
-                <div id="overlay">
-                Score: <span id="final_score"></span>
-                <br>
-                <a onClick="window.location.reload()" href="#">Play Again</a>
-                </div>
-                <canvas id ="defaultCanvas" width="600" height="450"></canvas>
-            
-            <div class="footer">
-                <h4>
-                    Designed By <a href="https://github.com/ashuray" target="_blank">ashuray</a>
-                </h4>
+  
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"> </script>
+</head>
+
+<body>
+    <main class="container">
+        <h1>Snake Game</h1>
+
+        <section id="canvas-wrap">
+            <div id="overlay" aria-live="polite">
+                <p>
+                    Score: <span id="final_score">0</span>
+                </p>
+                <button id="restart-btn" type="button">Play Again</button>
             </div>
-            
-        </div>
 
-    </body>
+            <canvas
+                id="defaultCanvas"
+                width="600"
+                height="450"
+                aria-label="Snake game canvas"
+            ></canvas>
+        </section>
+
+        <footer class="footer">
+            <h4>
+                <a 
+                    href="https://github.com/Akshat-shukla18/JSgames/tree/main/GAMES/snakeGame"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Akshat
+                </a>
+            </h4>
+        </footer>
+    </main>
+</body>
 </html>

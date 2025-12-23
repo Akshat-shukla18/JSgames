@@ -1,45 +1,125 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
 
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+/* Main Container */
 .container {
+    background: #111;
+    padding: 24px 28px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
 
-  width: 75%;
-  margin: auto;
-  background-color: #16A085 ;
-  box-shadow: 0 19px 38px 
-  rgba(0,0,0,0.30), 0 15px 12px 
-  rgba(0,0,0,0.22); 
-   margin-bottom: 0px;
-   }
+/* Title */
+.container h1 {
+    margin-bottom: 16px;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
 
-h1 {
-  text-align: center;
-  color: #282c34; }
-
-  h4 {
-  text-align: center;
-  color: #282c34; }
-
-canvas {
-  border-radius: 5px; }
-
+/* Canvas Wrapper */
 #canvas-wrap {
-	width:600px;
-    margin: auto;
-  }
-#overlay{
-	display:none;
-	color:#ffffff;
-	font-size:25px;
-	text-align:center;
-  margin: auto;
+    position: relative;
+    margin: 0 auto 16px;
+    width: 600px;
+    max-width: 100%;
 }
 
-#overlay a{
-	display:block;
-	margin-top:10px;
-	padding:10px;
-	background:#666666;
+/* Canvas */
+canvas {
+    display: block;
+    background: #000;
+    border: 3px solid #e0ebe7;
+    border-radius: 8px;
 }
 
-#overlay a:hover{
-	background:#333333;
+/* Game Over / Overlay */
+#overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none; /* show via JS when game ends */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    font-size: 1.1rem;
+    z-index: 10;
+}
+
+/* Score Text */
+#overlay p {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+#final_score {
+    color: #00ff9c;
+}
+
+/* Restart Button */
+#restart-btn {
+    padding: 10px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #921051;
+    color: #000;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+#restart-btn:hover {
+    background: #f9b114;
+    transform: translateY(-2px);
+}
+
+#restart-btn:active {
+    transform: translateY(0);
+}
+
+/* Footer */
+.footer {
+    margin-top: 10px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #1b201e;
+    font-weight: 500;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    canvas {
+        width: 100%;
+        height: auto;
+    }
+
+    .container {
+        padding: 18px;
+    }
+
+    .container h1 {
+        font-size: 1.6rem;
+    }
 }

@@ -1,131 +1,125 @@
-window.onload = function() {
-    // Define the canvas variable
-    var canvas = document.getElementById('defaultCanvas');
-    var ctx = canvas.getContext('2d');
-    ctx.fillRect(0, 0, 600, 450);
-    ctx.fillStyle = "black";
-    var w = canvas.width;
-    var h = canvas.height;
-    var cw = 15; //cell width
-    var d = "right"; //direction
-    var food; //food
-    var score = 0; //score
-    var speed = 130;
-    //snake array
-    var snake_array;
+window.onload = function () {
+    const canvas = document.getElementById("defaultCanvas");
+    const ctx = canvas.getContext("2d");
 
-    //initializer
+    const w = canvas.width;
+    const h = canvas.height;
+    const cw = 15; // cell width
+    let d = "right";
+    let food;
+    let score = 0;
+    const speed = 130;
+    let snake = [];
+    let gameLoop;
 
+    /* ---------- Initialization ---------- */
     function init() {
-        create_snake();
-        create_food();
+        d = "right";
         score = 0;
-        if (typeof game_loop != "undefined") clearInterval(game_loop);
-        game_loop = setInterval(paint, speed);
-        return ;  
+        document.getElementById("overlay").style.display = "none";
+
+        createSnake();
+        createFood();
+
+        if (gameLoop) clearInterval(gameLoop);
+        gameLoop = setInterval(paint, speed);
     }
-     
+
     init();
 
-    function create_snake() {
-        var length = 5;
-        snake_array = [];
-        for (var i = length - 1; i >= 0; i--) {
-            snake_array.push({
-                x: i,
-                y: 0
-            });
+    /* ---------- Snake ---------- */
+    function createSnake() {
+        snake = [];
+        for (let i = 4; i >= 0; i--) {
+            snake.push({ x: i, y: 0 });
         }
     }
 
-    function create_food() {
+    /* ---------- Food ---------- */
+    function createFood() {
         food = {
-            x: Math.round(Math.random() * (w - cw) / cw),
-            y: Math.round(Math.random() * (h - cw) / cw)
+            x: Math.floor(Math.random() * (w / cw)),
+            y: Math.floor(Math.random() * (h / cw))
         };
-
     }
 
-    function paint(){
+    /* ---------- Paint ---------- */
+    function paint() {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, w, h);
         ctx.strokeStyle = "white";
         ctx.strokeRect(0, 0, w, h);
 
-        var nx = snake_array[0].x;
-        var ny = snake_array[0].y;
+        let nx = snake[0].x;
+        let ny = snake[0].y;
 
-        if(d == "right") nx++;
-        else if(d == "left") nx--;
-        else if(d == "up") ny--;
-        else if(d == "down") ny++;
+        if (d === "right") nx++;
+        if (d === "left") nx--;
+        if (d === "up") ny--;
+        if (d === "down") ny++;
 
-        //collide code
-        if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx,ny,snake_array))
-        {
-            
-            document.getElementById("final_score").innerHTML = score;
-            document.getElementById("overlay").style.display = "block";
-            clearInterval(game_loop);
-            return ;
+        // Collision detection
+        if (
+            nx < 0 ||
+            ny < 0 ||
+            nx >= w / cw ||
+            ny >= h / cw ||
+            checkCollision(nx, ny, snake)
+        ) {
+            endGame();
+            return;
         }
 
-        if(nx == food.x && ny == food.y)
-        {
-            var tail = {
-                x: nx,
-                y: ny
-            };
+        let tail;
+        if (nx === food.x && ny === food.y) {
+            tail = { x: nx, y: ny };
             score++;
-            create_food();
-        }
-        else
-        {
-            var tail = snake_array.pop();
+            createFood();
+        } else {
+            tail = snake.pop();
             tail.x = nx;
             tail.y = ny;
         }
 
-        snake_array.unshift(tail);
+        snake.unshift(tail);
 
-        for(var i=0;i<snake_array.length;i++)
-        {
-            console.log(snake_array.length)
-            var c = snake_array[i];
-            console.log(c);
-            paint_cell(c.x,c.y);
-        }
+        // Draw snake
+        snake.forEach(cell => paintCell(cell.x, cell.y));
 
-        paint_cell(food.x,food.y);
-        
-        document.onkeydown = function(event)
-             {
-        var key = event.which;
-        if(key == "37" && d!= "right") d = "left";
-        else if(key == "38" && d!= "down") d = "up";
-        else if(key == "39" && d!= "left") d = "right";
-        else if(key == "40" && d != "up") d = "down";
-            }
-
+        // Draw food
+        paintCell(food.x, food.y, "#00ff9c");
     }
 
-    function paint_cell(x,y)
-    {
-        ctx.fillStyle = "red";
-        ctx.fillRect(x*cw,y*cw,cw,cw);
+    /* ---------- Cell ---------- */
+    function paintCell(x, y, color = "red") {
+        ctx.fillStyle = color;
+        ctx.fillRect(x * cw, y * cw, cw, cw);
         ctx.strokeStyle = "white";
-        ctx.strokeRect(x*cw,y*cw,cw,cw);
+        ctx.strokeRect(x * cw, y * cw, cw, cw);
     }
 
-    function check_collision(x, y, array){
-        for(var i = 0;i < array.length;i++){
-            if(array[i].x == x && array[i].y ==y)
-                return true;
-        }
-        return false;
+    /* ---------- Collision ---------- */
+    function checkCollision(x, y, array) {
+        return array.some(cell => cell.x === x && cell.y === y);
     }
 
-    
+    /* ---------- End Game ---------- */
+    function endGame() {
+        clearInterval(gameLoop);
+        document.getElementById("final_score").textContent = score;
+        document.getElementById("overlay").style.display = "flex";
+    }
 
-    
-}
+    /* ---------- Controls ---------- */
+    document.addEventListener("keydown", e => {
+        const key = e.key;
+
+        if (key === "ArrowLeft" && d !== "right") d = "left";
+        if (key === "ArrowUp" && d !== "down") d = "up";
+        if (key === "ArrowRight" && d !== "left") d = "right";
+        if (key === "ArrowDown" && d !== "up") d = "down";
+    });
+
+    /* ---------- Restart ---------- */
+    document.getElementById("restart-btn").addEventListener("click", init);
+};
